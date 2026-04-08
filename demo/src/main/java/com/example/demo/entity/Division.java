@@ -17,7 +17,8 @@ public class Division {
 
     private String district;
 
-    private String president;
+    @OneToOne
+    private Member president;
 
     @ManyToOne
     @JoinColumn(name="association_id")
@@ -31,12 +32,12 @@ public class Division {
 
     public Division() {}
 
-    public Division( String name, String district, String president, List<Member> members) {
-
+    public Division(String name, String district, Member president, Association association, List<Member> members) {
         this.name = name;
         this.district = district;
         this.president = president;
-        this.members = members != null ? members : new ArrayList<>();
+        this.association = association;
+        this.members = members;
     }
 
     public Long getId() {
@@ -51,7 +52,11 @@ public class Division {
         return district;
     }
 
-    public String getPresident() {
+    public Association getAssociation() {
+        return association;
+    }
+
+    public Member getPresident() {
         return president;
     }
 
@@ -68,8 +73,12 @@ public class Division {
         this.district = district;
     }
 
-    public void setPresident(String president) {
+    public void setPresident(Member president) {
         this.president = president;
+    }
+
+    public void setAssociation(Association association) {
+        this.association = association;
     }
 
     public void setMembers(List<Member> members) {
